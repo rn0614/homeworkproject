@@ -24,7 +24,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
         // 데이터 베이스 - 테이블 - 컬럼 -값
         db.execSQL("CREATE TABLE IF NOT EXISTS TodoList (id INTEGER PRIMARY KEY AUTOINCREMENT, checking BOOLEAN, title TEXT NOT NULL, content TEXT NOT NULL, writeDate TEXT NOT NULL)");
-        db.execSQL("INSERT INTO TodoList (checking, title, content, writeDate) VALUES(false,'할일','내용','2014-05-05 12:01:01');");
 
     }
 
@@ -42,7 +41,7 @@ public class DBHelper extends SQLiteOpenHelper {
         if(cursor.getCount() !=0){
             while (cursor.moveToNext()){
                 @SuppressLint("Range") int id=cursor.getInt(cursor.getColumnIndex("id"));
-                @SuppressLint("Range") boolean checking = cursor.getColumnIndex("checking")>0;
+                @SuppressLint("Range") boolean checking = cursor.getInt(cursor.getColumnIndex("checking"))>0;
                 @SuppressLint("Range") String title = cursor.getString(cursor.getColumnIndex("title"));
                 @SuppressLint("Range") String content = cursor.getString(cursor.getColumnIndex("content"));
                 @SuppressLint("Range") String writeDate = cursor.getString(cursor.getColumnIndex("writeDate"));
@@ -67,15 +66,15 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     // UPDATE 문
-    public void UpdateTodo(boolean _checking, String _title, String _content, String _writeDate, String _beforeDate) {
+    public void UpdateTodo(boolean _checking, String _title, String _content, String _writeDate, int _id) {
         SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("UPDATE TodoList SET checking="+_checking +", title='"+_title+"', content= '"+_content+"',writeDate='"+_writeDate+"' Where writeDate='" +_beforeDate+"'");
+        db.execSQL("UPDATE TodoList SET checking="+_checking +", title='"+_title+"', content= '"+_content+"',writeDate='"+_writeDate+"' Where id='" +_id+"'");
     }
 
     // DELETE 문
-    public void deleteTodo(String _beforeDate){
+    public void deleteTodo(int _id){
         SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("DELETE FROM TodoList WHERE writeDate = '"+_beforeDate+"'");
+        db.execSQL("DELETE FROM TodoList WHERE id = '"+_id+"'");
     }
 
 

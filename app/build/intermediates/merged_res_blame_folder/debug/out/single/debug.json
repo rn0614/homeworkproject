@@ -96,12 +96,12 @@
         "source": "C:\\Users\\rn061\\AndroidStudioProjects\\Homeworkproject\\app\\src\\main\\res\\drawable\\ic_menu_camera.xml"
     },
     {
-        "merged": "C:\\Users\\rn061\\AndroidStudioProjects\\Homeworkproject\\app\\build\\intermediates\\merged_res\\debug\\drawable_ic_menu_slideshow.xml.flat",
-        "source": "C:\\Users\\rn061\\AndroidStudioProjects\\Homeworkproject\\app\\src\\main\\res\\drawable\\ic_menu_slideshow.xml"
-    },
-    {
         "merged": "C:\\Users\\rn061\\AndroidStudioProjects\\Homeworkproject\\app\\build\\intermediates\\merged_res\\debug\\layout_dialog_edit.xml.flat",
         "source": "C:\\Users\\rn061\\AndroidStudioProjects\\Homeworkproject\\app\\src\\main\\res\\layout\\dialog_edit.xml"
+    },
+    {
+        "merged": "C:\\Users\\rn061\\AndroidStudioProjects\\Homeworkproject\\app\\build\\intermediates\\merged_res\\debug\\drawable_ic_menu_slideshow.xml.flat",
+        "source": "C:\\Users\\rn061\\AndroidStudioProjects\\Homeworkproject\\app\\src\\main\\res\\drawable\\ic_menu_slideshow.xml"
     },
     {
         "merged": "C:\\Users\\rn061\\AndroidStudioProjects\\Homeworkproject\\app\\build\\intermediates\\merged_res\\debug\\mipmap-mdpi_ic_launcher_round.webp.flat",

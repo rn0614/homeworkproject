@@ -4,11 +4,13 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,7 +48,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         holder.tv_title.setText(mTodoItems.get(position).getTitle());
         holder.tv_content.setText(mTodoItems.get(position).getContent());
         holder.tv_writeDate.setText(mTodoItems.get(position).getWriteDate());
-
     }
 
     @Override
@@ -67,6 +68,22 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             tv_title = itemView.findViewById(R.id.tv_title);
             tv_content = itemView.findViewById(R.id.tv_content);
             tv_writeDate = itemView.findViewById(R.id.tv_date);
+
+            tv_checking.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    int curPos = getAdapterPosition();
+                    TodoItem todoItem = mTodoItems.get(curPos);
+                    String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+                    String title =todoItem.getTitle();
+                    String content = todoItem.getContent();
+                    int id = todoItem.getId();
+                    // DB에 넣는 과정
+                    mDBHelper.UpdateTodo(compoundButton.isChecked(),title,content, currentTime, id);
+                }
+            });
+
+
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -101,9 +118,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
                                         String title = et_title.getText().toString();
                                         String content = et_content.getText().toString();
                                         String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-                                        String beforeTime = todoItem.getWriteDate();
+                                        int id= todoItem.getId();
                                         // DB에 넣는 과정
-                                        mDBHelper.UpdateTodo(checking, title, content, currentTime, beforeTime);
+                                        mDBHelper.UpdateTodo(checking, title, content, currentTime, id);
 
                                         // UI 적용용
                                         todoItem.setChecking(checking);
@@ -120,8 +137,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
                             }
                             else if(position==1){
                                 //삭제
-                                String beforeTime = todoItem.getWriteDate();
-                                mDBHelper.deleteTodo(beforeTime);
+                                int id = todoItem.getId();
+                                mDBHelper.deleteTodo(id);
 
                                 mTodoItems.remove(curPos);
                                 notifyItemRemoved(curPos);
@@ -138,6 +155,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     // 호출 화면 조정하기
     public void addItem(TodoItem _item){
         mTodoItems.add(0, _item); // 입력된 리스트 한 줄을 mTodoItems에 추가
-        notifyItemInserted(0);  // recyclerView 새로고침 과정
+        notifyDataSetChanged();  // recyclerView 새로고침 과정
     }
 }

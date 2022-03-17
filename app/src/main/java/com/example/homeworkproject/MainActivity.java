@@ -83,9 +83,9 @@ public class MainActivity extends AppCompatActivity {
                         item.setContent(et_content.getText().toString());
                         item.setWriteDate(currentTime);
 
-
-                        // 입력된 객체를 DB에 저장하는 과정
                         mAdapter.addItem(item);
+                        // 입력된 객체를 DB에 저장하는 과정
+                        mAdapter.notifyDataSetChanged();
                         mRv_todo.smoothScrollToPosition(0);
                         dialog.dismiss();
                         Toast.makeText(MainActivity.this, "추가완료", Toast.LENGTH_SHORT).show();
@@ -93,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
                 dialog.show();
-                LoadRecentDB();
             }
         });
         DrawerLayout drawer = binding.drawerLayout;
